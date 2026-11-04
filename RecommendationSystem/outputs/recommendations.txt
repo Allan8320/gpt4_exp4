@@ -1,0 +1,31 @@
+
+=================================================================
+PERSONALIZED RECOMMENDATION SYSTEM
+=================================================================
+Saved on: 04-11-2026 13:23:14
+
+USER PROFILE
+-----------------------------------------------------------------
+name: Allan
+age: 21
+interests: Artificial Intelligence, Python
+skill_level: Beginner
+goal: To learn AI
+
+RANKED RECOMMENDATIONS
+-----------------------------------------------------------------
+
+Rank: 1
+Name: AI for Beginners Course
+Score: 95/100
+Description: An introductory AI course.
+Reason: Matches beginner skill level.
+
+EXPLANATIONS
+-----------------------------------------------------------------
+
+1. AI for Beginners Course
+Suitable for learning AI.
+
+=================================================================
+

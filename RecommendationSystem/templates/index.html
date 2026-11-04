@@ -1,0 +1,252 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecommendAI | Personal Recommendation Platform</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="nav-container">
+        <a class="brand" href="/">
+            <span class="brand-mark">R</span>
+            <span>RecommendAI</span>
+        </a>
+
+        <div class="nav-status">
+            <span class="status-dot"></span>
+            AI SYSTEM ONLINE
+        </div>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero">
+        <div class="hero-label">PERSONALIZED RECOMMENDATION PLATFORM</div>
+
+        <h1>Better recommendations.<br>
+            <span>Smarter decisions.</span>
+        </h1>
+
+        <p>
+            An intelligent recommendation assistant that understands
+            your interests, evaluates your preferences and delivers
+            suggestions aligned with your goals.
+        </p>
+
+        <div class="hero-meta">
+            <span>AI-powered personalization</span>
+            <span class="meta-divider"></span>
+            <span>Intelligent ranking</span>
+            <span class="meta-divider"></span>
+            <span>Adaptive feedback</span>
+        </div>
+    </section>
+
+
+    <!-- PROFILE FORM -->
+    <section class="panel profile-panel" id="profilePanel">
+
+        <div class="panel-header">
+            <div>
+                <div class="section-kicker">01 / USER INFORMATION</div>
+                <h2>Create your profile</h2>
+                <p>Provide your details to generate relevant recommendations.</p>
+            </div>
+
+            <span class="header-label">PROFILE SETUP</span>
+        </div>
+
+        <form id="profileForm">
+
+            <div class="form-section-title">PERSONAL DETAILS</div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="name">Full name <span>*</span></label>
+                    <input id="name" type="text"
+                           placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="age">Age <span>*</span></label>
+                    <input id="age" type="number" min="1"
+                           placeholder="Enter your age" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="background">Educational / Professional Background <span>*</span></label>
+                    <input id="background" type="text"
+                           placeholder="e.g. Computer Science" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="interests">Interests <span>*</span></label>
+                    <input id="interests" type="text"
+                           placeholder="e.g. Artificial Intelligence, Python" required>
+                    <small>Separate multiple interests with commas.</small>
+                </div>
+
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="form-section-title">PREFERENCES AND OBJECTIVES</div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="skill_level">Skill level <span>*</span></label>
+                    <select id="skill_level" required>
+                        <option value="">Select skill level</option>
+                        <option>Beginner</option>
+                        <option>Intermediate</option>
+                        <option>Advanced</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="preferred_category">Preferred category <span>*</span></label>
+                    <input id="preferred_category" type="text"
+                           placeholder="e.g. Practical Learning" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="goal">Primary goal <span>*</span></label>
+                    <textarea id="goal" rows="3"
+                              placeholder="Describe what you want to learn or achieve..."
+                              required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="number_of_recommendations">
+                        Number of recommendations <span>*</span>
+                    </label>
+                    <input id="number_of_recommendations"
+                           type="number" min="1" max="10"
+                           value="3" required>
+                </div>
+
+            </div>
+
+            <div class="form-footer">
+                <p class="form-note">Fields marked with * are required.</p>
+
+                <button class="primary-button" id="generateButton" type="submit">
+                    Generate recommendations
+                    <span aria-hidden="true">→</span>
+                </button>
+            </div>
+
+            <p id="profileError" class="error-message"></p>
+
+        </form>
+    </section>
+
+
+    <!-- RECOMMENDATIONS -->
+    <section class="panel results-panel hidden" id="resultsPanel">
+
+        <div class="panel-header">
+            <div>
+                <div class="section-kicker">02 / RECOMMENDATION ENGINE</div>
+                <h2>Your recommendations</h2>
+                <p>Suggestions generated and ranked according to your profile.</p>
+            </div>
+
+            <span class="header-label">AI GENERATED</span>
+        </div>
+
+        <div id="recommendationList" class="recommendation-grid"></div>
+
+        <div class="subsection-header">
+            <div class="section-kicker">PERSONALIZED ANALYSIS</div>
+            <h2>Recommendation rationale</h2>
+            <p>Understand why each recommendation matches your preferences.</p>
+        </div>
+
+        <div id="explanationList" class="explanation-list"></div>
+
+    </section>
+
+
+    <!-- CHAT ASSISTANT -->
+    <section class="panel chat-panel hidden" id="chatPanel">
+
+        <div class="panel-header">
+            <div>
+                <div class="section-kicker">03 / INTERACTIVE ASSISTANT</div>
+                <h2>Recommendation assistant</h2>
+                <p>Continue the conversation to refine and manage your results.</p>
+            </div>
+
+            <span class="assistant-status">
+                <span class="status-dot"></span>
+                ACTIVE
+            </span>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+
+            <div class="message assistant-message">
+                <div class="message-avatar">AI</div>
+                <div class="message-content">
+                    <span class="message-sender">RecommendAI Assistant</span>
+                    Your recommendations are ready. You can ask me to
+                    refine your results, view your profile, explain
+                    a recommendation or save your results.
+                </div>
+            </div>
+
+        </div>
+
+        <form id="chatForm" class="chat-input-area">
+            <input
+                id="chatInput"
+                type="text"
+                placeholder="Type your message here..."
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit" id="sendButton">
+                Send
+                <span aria-hidden="true">→</span>
+            </button>
+        </form>
+
+        <div class="quick-actions">
+            <span class="quick-actions-label">SUGGESTED ACTIONS</span>
+
+            <button type="button" data-message="Show my profile">View profile</button>
+            <button type="button" data-message="Explain my recommendations">Explain results</button>
+            <button type="button" data-message="Save my recommendations">Save results</button>
+            <button type="button" data-message="Exit the application">Exit</button>
+        </div>
+
+    </section>
+
+
+    <footer>
+        <div class="footer-content">
+            <span class="footer-brand">RecommendAI</span>
+            <span>Personalized Recommendation System</span>
+            <span>Powered by Flask &amp; Ollama Llama 3.2</span>
+        </div>
+    </footer>
+
+</main>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
